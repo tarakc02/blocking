@@ -63,6 +63,7 @@ add_noise <- function(column, noise_prob = .04) {
 }
 
 output <- gen_records(n_rows, n_cols, n_pairs)
+output <- mutate(output, recordid = seq_len(nrow(output)))
 write_feather(output, args$output)
 
 # done.
