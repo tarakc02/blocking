@@ -23,13 +23,13 @@ n_cols <- args$ncol
 n_pairs <- args$npair
 
 gen_records <- function(n_rows, n_cols, n_pairs) {
-    alphabet_sizes <- rpois(lambda = 6, n = n_cols)
-    word_lengths <- rpois(lambda = 5, n = n_cols)
+    alphabet_sizes <- rpois(lambda = 4, n = n_cols)
+    word_lengths <- rpois(lambda = 4, n = n_cols)
 
     main <- map2(word_lengths, alphabet_sizes, gen_col, n = n_rows) %>%
         bind_cols %>% set_names(paste0("r", seq_len(n_cols)))
 
-    additions <- main[, which(word_lengths > 5)] %>%
+    additions <- main[, which(word_lengths > 4)] %>%
         mutate_all(derive_feature) %>%
         set_names(str_replace, "^r", "d")
 
@@ -55,7 +55,7 @@ derive_feature <- function(column) {
     str_sub(column, 1, 3)
 }
 
-add_noise <- function(column, noise_prob = .04) {
+add_noise <- function(column, noise_prob = .25) {
     has_noise <- rbernoulli(length(column), noise_prob)
     noise <- sample(column, size = sum(has_noise), replace = TRUE)
     column[has_noise] <- noise
