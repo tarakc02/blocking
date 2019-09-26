@@ -11,36 +11,66 @@ library(stringr)
 library(feather)
 library(argparse)
 
+library(argparse)
+
 parser <- ArgumentParser()
-parser$add_argument("--nrow", default = 1000, type = "integer")
-parser$add_argument("--ncol", default = 10, type = "integer")
-parser$add_argument("--npair", default = 472, type = "integer")
+parser$add_argument("--n_orig", type = "integer")
+parser$add_argument("--n_pair", type = "integer")
+parser$add_argument("--n_cols", type = "integer")
+parser$add_argument("--n_col_derived", type = "integer")
+parser$add_argument("--seed", type = "integer")
 parser$add_argument("--output")
 args <- parser$parse_args()
 
-n_rows <- args$nrow
-n_cols <- args$ncol
-n_pairs <- args$npair
+gen_records <- function(n_orig, n_cols, n_col_derived, n_pair) {
+    alphabet_sizes <- sample(2:5, size = n_cols, replace = TRUE)
+    word_lengths <- sample(3:6, size = n_cols, replace = TRUE)
+    #     alphabet_sizes <- rpois(lambda = 4, n = n_cols)
+    #     word_lengths <- rpois(lambda = 3, n = n_cols)
 
-gen_records <- function(n_rows, n_cols, n_pairs) {
-    alphabet_sizes <- rpois(lambda = 4, n = n_cols)
-    word_lengths <- rpois(lambda = 4, n = n_cols)
-
-    main <- map2(word_lengths, alphabet_sizes, gen_col, n = n_rows) %>%
+    main <- map2(word_lengths, alphabet_sizes, gen_col, n = n_orig) %>%
         bind_cols %>% set_names(paste0("r", seq_len(n_cols)))
 
-    additions <- main[, which(word_lengths > 4)] %>%
-        mutate_all(derive_feature) %>%
-        set_names(str_replace, "^r", "d")
+    additions <- main[, which(word_lengths > 3)] %>%
+        mutate_all(derive_feature, from = 1, to = 3) %>%
+        set_names(str_replace, "^r", "da")
 
-    main <- bind_cols(id = seq_len(n_rows), main, additions)
-    duplicates <- gen_pairs(main, np = n_pairs)
-    bind_rows(main, duplicates)
+    additions2 <- main[, which(word_lengths > 3)] %>%
+        mutate_all(derive_feature, from = 2, to = 4) %>%
+        set_names(str_replace, "^r", "db")
+
+    additions3 <- main[, which(word_lengths > 4)] %>%
+        mutate_all(derive_feature, from = 3, to = 5) %>%
+        set_names(str_replace, "^r", "dc")
+
+    additions4 <- main[, which(word_lengths > 5)] %>%
+        mutate_all(derive_feature, from = 4, to = 6) %>%
+        set_names(str_replace, "^r", "dd")
+
+    uniq <- bind_cols(id = seq_len(n_orig), main,
+                      additions, additions2, additions3, additions4)
+
+    derived_colnames <- colnames(uniq)[str_which(colnames(uniq), "^d")]
+    if (length(derived_colnames) < n_col_derived) stop("not enough derived cols")
+
+    keep_derived <- sample(derived_colnames,
+                           size = n_col_derived,
+                           replace = FALSE)
+    uniq %>% select(id, starts_with("r"), keep_derived)
+    dupes <- gen_pairs(uniq, n_pair)
+    bind_rows(uniq, dupes)
+}
+
+derive_feature <- function(column, from, to) {
+    str_sub(column, from, to)
 }
 
 gen_pairs <- function(records, np) {
-    dupes <- sample_n(records, np)
-    dupes <- mutate_at(dupes, vars(-id), add_noise)
+    dupes <- sample_n(records, np, replace = TRUE)
+    dupes <- mutate_at(dupes, vars(starts_with("r")), add_noise,
+                       noise_prob = .2)
+    dupes <- mutate_at(dupes, vars(starts_with("d")), add_noise,
+                       noise_prob = .1)
     dupes
 }
 
@@ -51,18 +81,16 @@ gen_col <- function(len, alph_size, n) {
         map_chr(paste, collapse = "")
 }
 
-derive_feature <- function(column) {
-    str_sub(column, 1, 3)
-}
-
-add_noise <- function(column, noise_prob = .25) {
+add_noise <- function(column, noise_prob) {
     has_noise <- rbernoulli(length(column), noise_prob)
     noise <- sample(column, size = sum(has_noise), replace = TRUE)
     column[has_noise] <- noise
     column
 }
 
-output <- gen_records(n_rows, n_cols, n_pairs)
+set.seed(args$seed)
+output <- gen_records(args$n_orig, args$n_cols,
+                      args$n_col_derived, args$n_pair)
 output <- mutate(output, recordid = seq_len(nrow(output)))
 write_feather(output, args$output)
 
