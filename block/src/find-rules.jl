@@ -32,7 +32,7 @@ end
 
 # matches_file = "input/small-pairs.feather"
 # records_file = "input/small-recs.feather"
-# budget = 3000
+# budget = 5000
 function main()
     records_file = ARGS[1]
     matches_file = ARGS[2]
@@ -55,3 +55,23 @@ function main()
 end
 
 main()
+
+#function emit(solution)
+#    recs = solution.problem.records
+#    cols = union(collect(solution.selected), [:recordid])
+#    blocks = filter(row -> row.recordid < row.recordid_1,
+#                    join(solution.problem.records[!, cols],
+#                         solution.problem.records[!, cols],
+#                         on = collect(solution.selected), makeunique = true))
+#    blocks[!, [:recordid, :recordid_1]]
+#end
+#
+#function check(result, matches)
+#    matching_pairs = matches[!, [:recordid_1, :recordid_2]]
+#
+#    all_pairs = reduce((a,b) -> [a;b], [emit(solution) for solution in result])
+#    unique!(join(all_pairs, matching_pairs,
+#                 on = [(:recordid, :recordid_1), (:recordid_1, :recordid_2)], kind = :inner))
+#end
+
+# done.
