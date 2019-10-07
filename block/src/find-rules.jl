@@ -16,9 +16,9 @@ function disjunct_search(problem)
         print("time              : ", Dates.format(now(), "HH:MM:SS"), "\n")
         print("remaining budget  : ", problem.budget, "\n")
         print("remaining pairs   : ", problem.npairs, "\n")
-        solution = Blocking.Search.search_greedy(problem,
-                                                 Blocking.Conjunctions.empty(problem),
-                                                 Blocking.Search.add_conjunct)
+        solution = Blocking.Search.greedy(problem,
+                                          Blocking.Conjunctions.empty(problem),
+                                          Blocking.Search.add_greedy)
         solution.cost > problem.budget && break
         solution.value == 0 && break
         print("FOUND CONJUNCTION : ", show(solution), "\n")

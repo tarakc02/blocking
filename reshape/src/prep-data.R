@@ -33,7 +33,7 @@ coverage <- function(...) {
         inner_join(tb1, by = c("recordid_1" = "recordid")) %>%
         inner_join(tb2, by = c("recordid_2" = "recordid"))
 
-    nms <- colnames(tb1)[colnames(tb1) != "recordid"]
+    nms <- colnames(tb1)[!colnames(tb1) %in% c("recordid", "id")]
 
     f <- function(nm) {
         coalesce(joined[[paste0(nm, ".x")]] == joined[[paste0(nm, ".y")]], FALSE)
