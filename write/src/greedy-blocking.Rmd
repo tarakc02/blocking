@@ -226,4 +226,4 @@ The `groupby` operation is probably the thing to focus on.
 
 ## Doing work in parallel
 
-Yet another insight is that `add_greedy` is trivially parallelizable. The evaluation of each neighbor is independent of the evaluation of any other neighbor, so we could use multiple threads or multiple processes to evaluate several neighbors at a time.
+Yet another insight is that `add_greedy` is parallelizable. The evaluation of each neighbor is independent of the evaluation of any other neighbor, so we could use multiple threads or multiple processes to evaluate several neighbors at a time.
