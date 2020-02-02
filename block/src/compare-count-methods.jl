@@ -3,12 +3,12 @@ using DataFrames
 using Feather
 using BenchmarkTools
 
-recs = Feather.read("input/large-recs.feather")
+recs = Feather.read("input/medium-recs.feather")
 candidates = [n for n in names(recs) if n ∉ (:id, :recordid)]
-testsel1 = sample(candidates, 1, replace = false)
-testsel2 = sample(candidates, 2, replace = false)
-testsel3 = sample(candidates, 3, replace = false)
-testsel8 = sample(candidates, 8, replace = false)
+testsel1 = Set(sample(candidates, 1, replace = false))
+testsel2 = Set(sample(candidates, 2, replace = false))
+testsel3 = Set(sample(candidates, 3, replace = false))
+testsel8 = Set(sample(candidates, 8, replace = false))
 
 function df_groupby(records, selected)
     selected = collect(selected)
@@ -57,6 +57,7 @@ function rmerge(dicts)
 end
 
 function forloop_1thread(records, selected)
+    selected = collect(selected)
     group_sizes = Dict{UInt64, Float64}()
     @inbounds for i = 1:size(records, 1)
         key = hash(records[i, selected])
@@ -67,7 +68,8 @@ end
 
 function forloop_nthread(records, selected,
                          group_sizes = [Dict{UInt64, Float64}() for d in 1:Threads.nthreads()])
-     @inbounds Threads.@threads for row = 1:size(records, 1)
+    selected = collect(selected)
+    @inbounds Threads.@threads for row = 1:size(records, 1)
         key = hash(records[row, selected])
         update_dict(key, group_sizes[Threads.threadid()])
     end
@@ -77,7 +79,8 @@ end
 
 function forloop_nthreadx(records, selected,
                          group_sizes = [Dict{UInt64, Float64}() for d in 1:Threads.nthreads()])
-     @inbounds Threads.@threads for row = 1:size(records, 1)
+    selected = collect(selected)
+    @inbounds Threads.@threads for row = 1:size(records, 1)
         key = hash(records[row, selected])
         update_dict(key, group_sizes[Threads.threadid()])
     end
