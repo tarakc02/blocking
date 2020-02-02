@@ -16,17 +16,17 @@ output/small.txt: \
 		src/find-rules.jl \
 		input/small-recs.feather \
 		input/small-pairs.feather
-	julia $< input/small-recs.feather input/small-pairs.feather 5000 > $@
+	JULIA_NUM_THREADS=12 julia $< input/small-recs.feather input/small-pairs.feather 5000 > $@
 
 output/medium.txt: \
 		src/find-rules.jl \
 		input/medium-recs.feather \
 		input/medium-pairs.feather
-	julia $< input/medium-recs.feather input/medium-pairs.feather 50000 > $@
+	JULIA_NUM_THREADS=12 julia $< input/medium-recs.feather input/medium-pairs.feather 50000 > $@
 
 output/large.txt: \
 		src/find-rules.jl \
 		input/large-recs.feather \
 		input/large-pairs.feather
-	julia $< input/large-recs.feather input/large-pairs.feather 1000000 > $@
+	JULIA_NUM_THREADS=12 julia $< input/large-recs.feather input/large-pairs.feather 1000000 > $@
 
