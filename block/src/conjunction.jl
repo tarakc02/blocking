@@ -42,24 +42,6 @@ function update_dict(key, dict)
     end
 end
 
-function merge_dicts(a, b)
-    if length(a) > length(b)
-        main = a
-        side = b
-    else
-        main = b
-        side = a
-    end
-    for (key, value) in side
-        if haskey(main, key)
-            main[key] += side[key]
-        else
-            main[key] = side[key]
-        end
-    end
-    return main
-end
-
 function cost(records, selected,
               group_sizes = [Dict{UInt64, Float64}() for d in 1:Threads.nthreads()])
     if length(selected) == 0
@@ -71,7 +53,7 @@ function cost(records, selected,
         key = hash(records[row, selected])
         update_dict(key, group_sizes[Threads.threadid()])
     end
-    gs = reduce(merge_dicts, group_sizes)
+    gs = merge(+, group_sizes...)
     sum(size * (size - 1) / 2 for (key, size) in gs)
 end
 

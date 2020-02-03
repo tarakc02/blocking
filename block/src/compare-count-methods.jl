@@ -3,7 +3,7 @@ using DataFrames
 using Feather
 using BenchmarkTools
 
-recs = Feather.read("input/medium-recs.feather")
+recs = Feather.read("input/large-recs.feather")
 candidates = [n for n in names(recs) if n ∉ (:id, :recordid)]
 testsel1 = Set(sample(candidates, 1, replace = false))
 testsel2 = Set(sample(candidates, 2, replace = false))
@@ -47,25 +47,6 @@ function merge_dicts(a, b)
     return main
 end
 
-function rmerge(dicts)
-    l = length(dicts)
-    l == 1 && return dicts[1]
-    l == 2 && return merge_dicts(dicts[1], dicts[2])
-    rest = Threads.@spawn rmerge(dicts[3:l])
-    first_two = merge_dicts(dicts[1], dicts[2])
-    merge_dicts(first_two, fetch(rest))
-end
-
-function forloop_1thread(records, selected)
-    selected = collect(selected)
-    group_sizes = Dict{UInt64, Float64}()
-    @inbounds for i = 1:size(records, 1)
-        key = hash(records[i, selected])
-        update_dict(key, group_sizes)
-    end
-    sum(size * (size - 1) / 2 for (key, size) in group_sizes)
-end
-
 function forloop_nthread(records, selected,
                          group_sizes = [Dict{UInt64, Float64}() for d in 1:Threads.nthreads()])
     selected = collect(selected)
@@ -84,21 +65,19 @@ function forloop_nthreadx(records, selected,
         key = hash(records[row, selected])
         update_dict(key, group_sizes[Threads.threadid()])
     end
-    gs = rmerge(group_sizes)
+    gs = merge(+, group_sizes...)
+    #gs = reduce(merge_dicts2, group_sizes)
     sum(size * (size - 1) / 2 for (key, size) in gs)
 end
 
 @benchmark df_groupby(recs, testsel1)
-@benchmark forloop_1thread(recs, testsel1)
 @benchmark forloop_nthread(recs, testsel1)
 @benchmark forloop_nthreadx(recs, testsel1)
 
 @benchmark df_groupby(recs, testsel8)
-@benchmark forloop_1thread(recs, testsel8)
 @benchmark forloop_nthread(recs, testsel8)
 @benchmark forloop_nthreadx(recs, testsel8)
 
 @benchmark df_groupby(recs, testsel3)
-@benchmark forloop_1thread(recs, testsel3)
 @benchmark forloop_nthread(recs, testsel3)
 @benchmark forloop_nthreadx(recs, testsel3)
