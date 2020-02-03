@@ -1,46 +1,46 @@
-time              : 08:37:30
+time              : 12:19:02
 remaining budget  : 5000
 remaining pairs   : 800
 FOUND CONJUNCTION : r3 ∧ r1 ∧ r2
              cost : 374
             value : 374
 
-time              : 08:37:30
+time              : 12:19:02
 remaining budget  : 4626
 remaining pairs   : 426
 FOUND CONJUNCTION : db3 ∧ dc2 ∧ r2 ∧ da2
              cost : 436
             value : 174
 
-time              : 08:37:30
+time              : 12:19:02
 remaining budget  : 4190
 remaining pairs   : 252
 FOUND CONJUNCTION : r3 ∧ dd2 ∧ db2
              cost : 500
             value : 134
 
-time              : 08:37:30
+time              : 12:19:02
 remaining budget  : 3690
 remaining pairs   : 118
 FOUND CONJUNCTION : dc3 ∧ da3 ∧ r2
              cost : 485
             value : 34
 
-time              : 08:37:30
+time              : 12:19:02
 remaining budget  : 3205
 remaining pairs   : 84
 FOUND CONJUNCTION : r3 ∧ dc2 ∧ da3 ∧ da2
              cost : 440
             value : 24
 
-time              : 08:37:30
+time              : 12:19:02
 remaining budget  : 2765
 remaining pairs   : 60
 FOUND CONJUNCTION : dd3 ∧ r2
              cost : 565
             value : 8
 
-time              : 08:37:30
+time              : 12:19:03
 remaining budget  : 2200
 remaining pairs   : 52
    ...recursing...
@@ -48,7 +48,7 @@ FOUND CONJUNCTION : dd3 ∧ r1 ∧ dc2 ∧ dd2
              cost : 450
             value : 31
 
-time              : 08:37:30
+time              : 12:19:03
 remaining budget  : 1750
 remaining pairs   : 21
    ...recursing...
@@ -56,14 +56,14 @@ FOUND CONJUNCTION : r3 ∧ db3 ∧ r1 ∧ dc3
              cost : 377
             value : 2
 
-time              : 08:37:30
+time              : 12:19:03
 remaining budget  : 1373
 remaining pairs   : 19
 FOUND CONJUNCTION : db3 ∧ r1 ∧ dd2 ∧ r2
              cost : 362
             value : 1
 
-time              : 08:37:30
+time              : 12:19:03
 remaining budget  : 1011
 remaining pairs   : 18
    ...recursing...
@@ -71,7 +71,7 @@ FOUND CONJUNCTION : db3 ∧ dd2 ∧ dc3 ∧ da2
              cost : 481
             value : 9
 
-time              : 08:37:30
+time              : 12:19:03
 remaining budget  : 530
 remaining pairs   : 9
    ...recursing...
@@ -79,7 +79,7 @@ remaining pairs   : 9
    ...recursing...
 
 Done.
-time              : 08:37:30
+time              : 12:19:03
 matches found  : 791 (out of 800)
 pairs generated: 4470
 Final rule:

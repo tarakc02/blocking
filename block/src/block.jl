@@ -7,6 +7,7 @@ struct Problem
     npairs::Int
     rules::Dict{Symbol, Array{Bool, 1}}
     budget::Int
+    costcalcs::Dict{Set{Symbol}, Float64}
 end
 
 abstract type Solution end
@@ -21,7 +22,11 @@ function Problem(records::DataFrame,
                  candidates::Array{Symbol, 1},
                  budget::Int)
     rules = rule_dict(matches, candidates)
-    Blocking.Problem(records, size(matches, 1,), rules, budget)
+    Blocking.Problem(records,
+                     size(matches, 1,),
+                     rules,
+                     budget,
+                     Dict{Set{Symbol}, Float64}())
 end
 
 function pairs(problem, selected)

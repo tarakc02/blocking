@@ -11,7 +11,7 @@ struct Conjunction <: Blocking.Solution
 end
 
 function Conjunction(problem::Blocking.Problem, selected, unselected)
-    cst = cost(problem.records, selected)
+    cst = get!(problem.costcalcs, selected, cost(problem.records, selected))
     val = value(problem, selected)
     Conjunction(problem, selected, unselected, cst, val)
 end
@@ -42,8 +42,8 @@ function update_dict(key, dict)
     end
 end
 
-function cost(records, selected,
-              group_sizes = [Dict{UInt64, Float64}() for d in 1:Threads.nthreads()])
+function cost(records, selected)
+    group_sizes = [Dict{UInt64, Float64}() for d in 1:Threads.nthreads()]
     if length(selected) == 0
         n_recs = size(records, 1)
         return n_recs * (n_recs - 1) / 2
@@ -91,7 +91,7 @@ function subproblem(conjunction)
 
     remove = Blocking.pairs(conjunction.problem, conjunction.selected)
     rules = Dict(rule => filter_rule(problem.rules[rule], remove) for rule in keys(problem.rules))
-    Blocking.Problem(recs, npairs, rules, budget)
+    Blocking.Problem(recs, npairs, rules, budget, problem.costcalcs)
 end
 
 end
