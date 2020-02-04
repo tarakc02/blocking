@@ -11,7 +11,7 @@ struct Conjunction <: Blocking.Solution
 end
 
 function Conjunction(problem::Blocking.Problem, selected, unselected)
-    cst = get!(problem.costcalcs, selected, cost(problem.records, selected))
+    cst = get!(problem.costcalcs, hash(selected), cost(problem.records, selected))
     val = value(problem, selected)
     Conjunction(problem, selected, unselected, cst, val)
 end

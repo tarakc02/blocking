@@ -51,6 +51,7 @@ function main()
     print("time              : ", Dates.format(now(), "HH:MM:SS"), "\n")
     print("matches found  : ", tot_value, " (out of ", problem.npairs, ")", "\n")
     print("pairs generated: ", tot_cost, "\n")
+    print("distinct conjunctions evaluated: ", length(problem.costcalcs), "\n")
     print("Final rule:\n")
     print(join(["("*show(solution)*")" for solution in my_solution], " ∨\n"), "\n")
 end
