@@ -9,7 +9,6 @@ function add_greedy(conjunction)
     current_ratio = current.value / current.cost
     for rule in conjunction.unselected
         candidate = Conjunctions.and(conjunction, rule)
-
         candidate_ratio = candidate.value / candidate.cost
         candidate_ratio < current_ratio && continue
         if candidate_ratio > current_ratio
@@ -18,7 +17,7 @@ function add_greedy(conjunction)
             continue
         end
 
-        if candidate.value > current.value || candidate.cost < current.cost
+        if candidate.value > current.value
             current = candidate
             current_ratio = candidate_ratio
         end
@@ -55,7 +54,7 @@ end
 function greedy(problem, start, advance)
     current = start
     next = advance(current)
-    while next != current
+    while next != current && length(next.selected) <= 3
         current = next
         next = advance(current)
     end

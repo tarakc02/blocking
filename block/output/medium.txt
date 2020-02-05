@@ -1,130 +1,118 @@
-time              : 12:36:42
+time              : 17:15:40
 remaining budget  : 50000
 remaining pairs   : 6523
-FOUND CONJUNCTION : db3 ∧ db1 ∧ dc6 ∧ da1 ∧ r3 ∧ dc5 ∧ r4 ∧ db2 ∧ r2 ∧ dd5 ∧ db5 ∧ dc1 ∧ r1 ∧ da6 ∧ db6 ∧ dc2 ∧ da5 ∧ r5 ∧ da3 ∧ r6 ∧ da2
-             cost : 300
-            value : 300
+FOUND CONJUNCTION : db3 ∧ r1 ∧ r6
+             cost : 3479
+            value : 3479
 
-time              : 12:36:54
-remaining budget  : 49700
-remaining pairs   : 6223
-FOUND CONJUNCTION : r1 ∧ r6
-             cost : 3897
-            value : 3561
+time              : 17:15:42
+remaining budget  : 46521
+remaining pairs   : 3044
+FOUND CONJUNCTION : db1 ∧ dd5 ∧ r1 ∧ r2
+             cost : 3028
+            value : 915
 
-time              : 12:36:55
-remaining budget  : 45803
-remaining pairs   : 2662
-FOUND CONJUNCTION : db1 ∧ dc6 ∧ r2 ∧ dd5 ∧ db5 ∧ dc1 ∧ r1 ∧ da6 ∧ db6 ∧ r4 ∧ da1
-             cost : 1224
-            value : 291
-
-time              : 12:37:01
-remaining budget  : 44579
-remaining pairs   : 2371
-FOUND CONJUNCTION : db3 ∧ r1 ∧ r5
-             cost : 3486
-            value : 556
-
-time              : 12:37:03
-remaining budget  : 41093
-remaining pairs   : 1815
+time              : 17:15:43
+remaining budget  : 43493
+remaining pairs   : 2129
    ...recursing...
-FOUND CONJUNCTION : dc6 ∧ db5 ∧ da6 ∧ r5 ∧ dc5 ∧ db2 ∧ r2 ∧ da2
-             cost : 1962
-            value : 496
+FOUND CONJUNCTION : r1 ∧ da6 ∧ r5
+             cost : 3464
+            value : 384
 
-time              : 12:37:07
-remaining budget  : 39131
-remaining pairs   : 1319
+time              : 17:15:43
+remaining budget  : 40029
+remaining pairs   : 1745
    ...recursing...
-FOUND CONJUNCTION : db1 ∧ db6 ∧ da3 ∧ r2
-             cost : 3542
-            value : 583
+FOUND CONJUNCTION : da6 ∧ dc5 ∧ r6 ∧ r2
+             cost : 3124
+            value : 756
 
-time              : 12:37:15
-remaining budget  : 35589
-remaining pairs   : 736
+time              : 17:15:44
+remaining budget  : 36905
+remaining pairs   : 989
    ...recursing...
-FOUND CONJUNCTION : db3 ∧ r5 ∧ r6
-             cost : 3538
-            value : 257
+FOUND CONJUNCTION : db5 ∧ r1 ∧ db6 ∧ da3
+             cost : 3550
+            value : 134
 
-time              : 12:37:17
-remaining budget  : 32051
-remaining pairs   : 479
+time              : 17:15:45
+remaining budget  : 33355
+remaining pairs   : 855
    ...recursing...
-FOUND CONJUNCTION : dc6 ∧ dd5 ∧ r1
-             cost : 3960
-            value : 117
+FOUND CONJUNCTION : db1 ∧ r5 ∧ r6 ∧ da2
+             cost : 3139
+            value : 253
 
-time              : 12:37:19
-remaining budget  : 28091
-remaining pairs   : 362
+time              : 17:15:45
+remaining budget  : 30216
+remaining pairs   : 602
    ...recursing...
-FOUND CONJUNCTION : da6 ∧ r4 ∧ r6 ∧ db2 ∧ da1
-             cost : 2828
-            value : 99
+FOUND CONJUNCTION : dc1 ∧ da3 ∧ db2 ∧ r2
+             cost : 3481
+            value : 245
 
-time              : 12:37:22
-remaining budget  : 25263
-remaining pairs   : 263
+time              : 17:15:46
+remaining budget  : 26735
+remaining pairs   : 357
    ...recursing...
-FOUND CONJUNCTION : dc1 ∧ dc5 ∧ r2
-             cost : 3954
-            value : 76
+FOUND CONJUNCTION : r4 ∧ r6 ∧ db2 ∧ da1
+             cost : 3159
+            value : 85
 
-time              : 12:37:24
-remaining budget  : 21309
-remaining pairs   : 187
+time              : 17:15:47
+remaining budget  : 23576
+remaining pairs   : 272
    ...recursing...
-FOUND CONJUNCTION : da6 ∧ r5 ∧ da1
-             cost : 4051
-            value : 80
+FOUND CONJUNCTION : db1 ∧ r3 ∧ r5
+             cost : 3551
+            value : 103
 
-time              : 12:37:26
-remaining budget  : 17258
-remaining pairs   : 107
+time              : 17:15:47
+remaining budget  : 20025
+remaining pairs   : 169
    ...recursing...
-FOUND CONJUNCTION : db1 ∧ dc5 ∧ r6 ∧ da2
-             cost : 3582
+FOUND CONJUNCTION : r3 ∧ r1 ∧ da5 ∧ da1
+             cost : 3097
+            value : 17
+
+time              : 17:15:48
+remaining budget  : 16928
+remaining pairs   : 152
+   ...recursing...
+FOUND CONJUNCTION : dc1 ∧ dc2 ∧ dc5 ∧ r6
+             cost : 3638
             value : 30
 
-time              : 12:37:29
-remaining budget  : 13676
-remaining pairs   : 77
+time              : 17:15:49
+remaining budget  : 13290
+remaining pairs   : 122
    ...recursing...
-FOUND CONJUNCTION : db1 ∧ r1 ∧ dc5 ∧ db2 ∧ da2
-             cost : 3104
-            value : 12
+FOUND CONJUNCTION : da6 ∧ r2 ∧ da1
+             cost : 3957
+            value : 33
 
-time              : 12:37:32
-remaining budget  : 10572
-remaining pairs   : 65
+time              : 17:15:50
+remaining budget  : 9333
+remaining pairs   : 89
    ...recursing...
-FOUND CONJUNCTION : r3 ∧ dc6 ∧ db5 ∧ dd5 ∧ r6
-             cost : 2753
-            value : 8
+FOUND CONJUNCTION : db3 ∧ dd5 ∧ db6 ∧ r5
+             cost : 3634
+            value : 27
 
-time              : 12:37:35
-remaining budget  : 7819
-remaining pairs   : 57
+time              : 17:15:50
+remaining budget  : 5699
+remaining pairs   : 62
    ...recursing...
-FOUND CONJUNCTION : dd5 ∧ dc1 ∧ dc2 ∧ da5 ∧ r5
-             cost : 3222
-            value : 14
+FOUND CONJUNCTION : db1 ∧ dc6 ∧ r1 ∧ db2
+             cost : 3468
+            value : 7
 
-time              : 12:37:39
-remaining budget  : 4597
-remaining pairs   : 43
+time              : 17:15:51
+remaining budget  : 2231
+remaining pairs   : 55
    ...recursing...
-FOUND CONJUNCTION : r3 ∧ db3 ∧ db5 ∧ r1 ∧ da5
-             cost : 2755
-            value : 4
-
-time              : 12:37:43
-remaining budget  : 1842
-remaining pairs   : 39
+   ...recursing...
    ...recursing...
    ...recursing...
    ...recursing...
@@ -132,22 +120,22 @@ remaining pairs   : 39
    ...recursing...
 
 Done.
-matches found  : 6484 (out of 6523)
-pairs generated: 48158
+time              : 17:15:52
+matches found  : 6468 (out of 6523)
+pairs generated: 47769
+distinct conjunctions evaluated: 672
 Final rule:
-(db3 ∧ db1 ∧ dc6 ∧ da1 ∧ r3 ∧ dc5 ∧ r4 ∧ db2 ∧ r2 ∧ dd5 ∧ db5 ∧ dc1 ∧ r1 ∧ da6 ∧ db6 ∧ dc2 ∧ da5 ∧ r5 ∧ da3 ∧ r6 ∧ da2) ∨
-(r1 ∧ r6) ∨
-(db1 ∧ dc6 ∧ r2 ∧ dd5 ∧ db5 ∧ dc1 ∧ r1 ∧ da6 ∧ db6 ∧ r4 ∧ da1) ∨
-(db3 ∧ r1 ∧ r5) ∨
-(dc6 ∧ db5 ∧ da6 ∧ r5 ∧ dc5 ∧ db2 ∧ r2 ∧ da2) ∨
-(db1 ∧ db6 ∧ da3 ∧ r2) ∨
-(db3 ∧ r5 ∧ r6) ∨
-(dc6 ∧ dd5 ∧ r1) ∨
-(da6 ∧ r4 ∧ r6 ∧ db2 ∧ da1) ∨
-(dc1 ∧ dc5 ∧ r2) ∨
-(da6 ∧ r5 ∧ da1) ∨
-(db1 ∧ dc5 ∧ r6 ∧ da2) ∨
-(db1 ∧ r1 ∧ dc5 ∧ db2 ∧ da2) ∨
-(r3 ∧ dc6 ∧ db5 ∧ dd5 ∧ r6) ∨
-(dd5 ∧ dc1 ∧ dc2 ∧ da5 ∧ r5) ∨
-(r3 ∧ db3 ∧ db5 ∧ r1 ∧ da5)
+(db3 ∧ r1 ∧ r6) ∨
+(db1 ∧ dd5 ∧ r1 ∧ r2) ∨
+(r1 ∧ da6 ∧ r5) ∨
+(da6 ∧ dc5 ∧ r6 ∧ r2) ∨
+(db5 ∧ r1 ∧ db6 ∧ da3) ∨
+(db1 ∧ r5 ∧ r6 ∧ da2) ∨
+(dc1 ∧ da3 ∧ db2 ∧ r2) ∨
+(r4 ∧ r6 ∧ db2 ∧ da1) ∨
+(db1 ∧ r3 ∧ r5) ∨
+(r3 ∧ r1 ∧ da5 ∧ da1) ∨
+(dc1 ∧ dc2 ∧ dc5 ∧ r6) ∨
+(da6 ∧ r2 ∧ da1) ∨
+(db3 ∧ dd5 ∧ db6 ∧ r5) ∨
+(db1 ∧ dc6 ∧ r1 ∧ db2)

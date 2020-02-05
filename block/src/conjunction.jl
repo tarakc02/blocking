@@ -11,7 +11,7 @@ struct Conjunction <: Blocking.Solution
 end
 
 function Conjunction(problem::Blocking.Problem, selected, unselected)
-    cst = cost(problem.records, selected)
+    cst = get!(problem.costcalcs, hash(selected), cost(problem.records, selected))
     val = value(problem, selected)
     Conjunction(problem, selected, unselected, cst, val)
 end
@@ -34,21 +34,29 @@ function value(problem, selected)
     sum(ismatch)
 end
 
-using LRUCache
-using DataFrames
-const costhist = LRU{Tuple{DataFrames.DataFrame, Set{Symbol}}, Int}(maxsize = 1000)
-function cost(records, selected)
-    get!(costhist, (records, selected)) do
-        selected = collect(selected)
-        if length(selected) == 0
-            ns = [size(records, 1)]
-        else
-            complete_records = dropmissing(records, selected)
-            ns = [size(df, 1) for df in groupby(complete_records, selected)]
-        end
-        sum([n * (n - 1) / 2 for n in ns])
+function update_dict(key, dict)
+    if haskey(dict, key)
+        dict[key] += 1
+    else
+        dict[key] = 1
     end
 end
+
+function cost(records, selected)
+    group_sizes = [Dict{UInt64, Float64}() for d in 1:Threads.nthreads()]
+    if length(selected) == 0
+        n_recs = size(records, 1)
+        return n_recs * (n_recs - 1) / 2
+    end
+    selected = collect(selected)
+    @inbounds Threads.@threads for row = 1:size(records, 1)
+        key = hash(records[row, selected])
+        update_dict(key, group_sizes[Threads.threadid()])
+    end
+    gs = merge(+, group_sizes...)
+    sum(size * (size - 1) / 2 for (key, size) in gs)
+end
+
 
 function Base.show(solution::Conjunction)
     isempty(solution.selected) && return ""
@@ -83,7 +91,7 @@ function subproblem(conjunction)
 
     remove = Blocking.pairs(conjunction.problem, conjunction.selected)
     rules = Dict(rule => filter_rule(problem.rules[rule], remove) for rule in keys(problem.rules))
-    Blocking.Problem(recs, npairs, rules, budget)
+    Blocking.Problem(recs, npairs, rules, budget, problem.costcalcs)
 end
 
 end
