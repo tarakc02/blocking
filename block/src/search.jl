@@ -26,7 +26,6 @@ function add_greedy(conjunction)
     # conjuncts until we have something acceptable
     if current.cost > problem.budget && !isempty(current.unselected)
         current == conjunction && return current
-        print("   ...recursing...\n")
         return add_greedy(current)
     end
     return current
