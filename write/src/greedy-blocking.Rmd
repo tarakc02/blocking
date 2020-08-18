@@ -3,6 +3,8 @@ output:
     html_document:
         toc: true
         highlight: pygments
+    md_document:
+        variant: gfm
 title: Searching for blocking rules 
 ---
 ```{r setup, include = FALSE}
@@ -67,7 +69,7 @@ problem = Blocking.Problem(
     records,
     pairs,
     # array of candidate rules
-    [n for n in names(records) if n ∉ (:id, :recordid)],
+    [n for n in propertynames(records) if n ∉ (:id, :recordid)],
     # budget
     5000);
 problem.npairs
@@ -207,23 +209,23 @@ At each step of the algorithm, `add_greedy` evaluates all of the neighbors of th
 
 ## Doing faster work
 
-The time required to construct a conjunction is dominated by the time required to calculate its `cost`, so that's where we'd want to focus our efforts. I implemented one small optimization -- I used [LRUCache](https://github.com/JuliaCollections/LRUCache.jl) to [memoize](https://en.wikipedia.org/wiki/Memoization) the `cost()` function. But it's probably possible to speed up the `cost()` function itself. Right now it looks like this (for simplicity, I've removed the memoization parts to focus on the meat of the function, see [the repo](https://github.com/tarakc02/blocking) for the full details):
+The time required to construct a conjunction is dominated by the time required to calculate its `cost`, so that's where we'd want to focus our efforts. I implemented one small optimization -- I [memoized](https://en.wikipedia.org/wiki/Memoization) the `cost()` function. But it's probably possible to speed up the `cost()` function itself. Right now it looks like this (see [the repo](https://github.com/tarakc02/blocking) for the full details):
 
 ```{julia}
 function cost(records, selected)
+    group_sizes = [Dict{UInt64, Float64}() for d in 1:Threads.nthreads()]
     if length(selected) == 0
-        ns = [size(records, 1)]
-    else
-        selected = collect(selected)
-        complete_records = dropmissing(records, selected)
-        ns = [size(df, 1) for df in groupby(complete_records, selected)]
+        n_recs = size(records, 1)
+        return n_recs * (n_recs - 1) / 2
     end
-    sum([n * (n - 1) / 2 for n in ns])
+    selected = collect(selected)
+    @inbounds Threads.@threads for row = 1:size(records, 1)
+        key = hash(records[row, selected])
+        update_dict(key, group_sizes[Threads.threadid()])
+    end
+    gs = merge(+, group_sizes...)
+    sum(size * (size - 1) / 2 for (key, size) in gs)
 end;
 ```
 
-The `groupby` operation is probably the thing to focus on.
-
-## Doing work in parallel
-
-Yet another insight is that `add_greedy` is parallelizable. The evaluation of each neighbor is independent of the evaluation of any other neighbor, so we could use multiple threads or multiple processes to evaluate several neighbors at a time.
+That function takes advantage of Julia's multithreading capabilities and is pretty fast, but perhaps it could be further optimized.

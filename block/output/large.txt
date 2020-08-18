@@ -8,7 +8,7 @@ Performance
 ===========
 Threads      : 7
 Rules visited: 2003
-Time         : 4 minutes, 24 seconds, 411 milliseconds
+Time         : 2 minutes, 46 seconds, 372 milliseconds
 
 Quality
 =======

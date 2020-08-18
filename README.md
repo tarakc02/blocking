@@ -1,8 +1,6 @@
 Some code to test out ideas about searching for blocking rules.
 
-So far:
-
-`simulate` -> `reshape` -> `block`
+`write/output` describes the local search algorithm that I'm using.
 
 `block/output` contains results -- that includes the final rule found for each simulated dataset along with numbers of true matches covered by the rule and the total number of pairs generated. There you can also find timestamps from each iteration, to get an idea of performance.
 

@@ -45,7 +45,7 @@ function main()
     records = Feather.read(records_file)
     matches = Feather.read(matches_file)
 
-    candidates = [n for n in names(records) if n ∉ (:id, :recordid)]
+    candidates = [n for n in propertynames(records) if n ∉ (:id, :recordid)]
     problem = Blocking.Problem(records, matches, candidates, budget)
 
     start_time = now()
